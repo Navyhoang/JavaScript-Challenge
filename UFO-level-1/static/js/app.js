@@ -4,22 +4,31 @@ var tableData = data;
 // Get a reference to the table body
 var tbody = d3.select("tbody");
 
-// Use d3 to append table rows `tr`
-data.forEach(function(tableData) {
+function runRefresh(tableData, columns) {
 
-    // Add new rows of data for each UFO sighting
-    var row = tbody.append("tr");
+    
+    // Use d3 to append table rows `tr`
+    data.forEach(function(tableData) {
 
-    // Loop through each object in the data array, keys and values to each column
-    Object.entries(tableData).forEach(function([key, value]) {
+        // Add new rows of data for each UFO sighting
+        var row = tbody.append("tr");
 
-        // Append a cell to the row for each value
-        var cell = row.append("td");
-        cell.text(value);
+        // Loop through each object in the data array, keys and values to each column
+        Object.entries(tableData).forEach(function([key, value]) {
+
+
+            // Append a cell to the row for each value
+            var cell = row.append("td");
+            cell.text(value);
+
+        });
 
     });
 
-});
+    return tbody
+};
+
+runRefresh(tableData, ["datetime", "city", "state", "country", "shape", "Duration", "comments"])
 
 // Step 2: Filter the table data based on user's input
 // Use d3 to Select the form
@@ -64,6 +73,16 @@ function runEnter() {
         });
       });
 };
+
+// ????????
+// Reload the original data set when the form is emptied
+
+document.getElementsByClassName("form-control")[0].addEventListener("change", runRefresh);
+
+
+
+
+
 
 
 
