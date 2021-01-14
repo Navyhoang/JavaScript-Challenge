@@ -4,7 +4,7 @@ var tableData = data;
 // Get a reference to the table body
 var tbody = d3.select("tbody");
 
-function runRefresh(tableData, columns) {
+function runRefresh(tableData) {
 
     
     // Use d3 to append table rows `tr`
@@ -28,7 +28,7 @@ function runRefresh(tableData, columns) {
     return tbody
 };
 
-runRefresh(tableData, ["datetime", "city", "state", "country", "shape", "Duration", "comments"])
+runRefresh(tableData)
 
 // Step 2: Filter the table data based on user's input
 // Use d3 to Select the form
@@ -41,7 +41,7 @@ form.on("submit", runEnter);
 function runEnter() {
 
     // Delete all existing rows
-    d3.selectAll("tr").remove()
+    d3.select("tbody").selectAll("tr").remove()
 
     // Prevent the page from refreshing
     d3.event.preventDefault();
@@ -55,6 +55,7 @@ function runEnter() {
     //Listen to the event (input is submited) and search through the date/time column
     // to find rows that match user input.
 
+    // Add table head
     var filteredData = tableData.filter(city => city.datetime === inputValue);
     console.log(filteredData);
 
@@ -74,37 +75,5 @@ function runEnter() {
       });
 };
 
-// ????????
 // Reload the original data set when the form is emptied
-
 document.getElementsByClassName("form-control")[0].addEventListener("change", runRefresh);
-
-
-
-
-
-
-
-
-// use index to access array items
-// use push to add item to array
-// use slice to return selected item of array
-// use join to add items of an array into a string
-// use split to turn a string into an array
-// use for loop or arrow function (2.06, 2.08)
-// use map to return a new array (2.05, 2.08)
-// use forEach to loop through an array and log each time (2.05)
-// use math operations
-// use filter (2.10)
-// --------------
-// us d3.select id or class, .text to modify text,. attr to get html, change href,
-// Select all list items, then change their font color
-// d3.selectAll("li").style("color", "blue");     change style
-// var li2 = d3.select("ul").append("li").text("Another new item!"); (3.01)
-//d3.select("table")   select table
-// add items to table (3.02, 3.03)
-// var inputText = d3.event.target.value; handle events (3.05)
-
-
-
-
