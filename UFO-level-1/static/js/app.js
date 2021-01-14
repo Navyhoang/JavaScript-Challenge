@@ -1,7 +1,6 @@
 // connect to data.js file and set it to a variable
 var tableData = data;
 
-// Step 1: Append a table to the web page
 // Get a reference to the table body
 var tbody = d3.select("tbody");
 
@@ -10,7 +9,7 @@ data.forEach(function(tableData) {
 
     // Add new rows of data for each UFO sighting
     var row = tbody.append("tr");
-  
+
     // Loop through each object in the data array, keys and values to each column
     Object.entries(tableData).forEach(function([key, value]) {
 
@@ -19,11 +18,12 @@ data.forEach(function(tableData) {
         cell.text(value);
 
     });
-  });
+
+});
 
 // Step 2: Filter the table data based on user's input
 // Use d3 to Select the form
-var form = d3.select("#form-group");
+var form = d3.select("form");
 
 // Create event handler and run the function below when user enters an input
 form.on("submit", runEnter);
@@ -31,11 +31,14 @@ form.on("submit", runEnter);
 // Complete the event handler function for the form
 function runEnter() {
 
+    // Delete all existing rows
+    d3.selectAll("tr").remove()
+
     // Prevent the page from refreshing
     d3.event.preventDefault();
     
     // Select the input element and get the raw HTML node
-    var dateForm = d3.select("#datetime");
+    var dateForm = d3.select(".form-control");
 
     // Get the value property of the input element
     var inputValue = dateForm.property("value");
@@ -44,21 +47,20 @@ function runEnter() {
     // to find rows that match user input.
 
     var filteredData = tableData.filter(city => city.datetime === inputValue);
+    console.log(filteredData);
 
     // Only display the filteredData in the table section
-    data.forEach(function(filteredData) {
-
-        // Delete all existing rows
-        d3.selectall("tr").remove()
-
+    filteredData.forEach(function(filteredData) {
+  
         // Add new rows of data for each UFO sighting
         var row = tbody.append("tr");
       
         Object.entries(filteredData).forEach(function([key, value]) {
     
-          // Append a cell to the row for each value
-          var cell = row.append("td");
-          cell.text(value);
+            // Append a cell to the row for each value
+            var cell = row.append("td");
+            cell.text(value);
+
         });
       });
 };
